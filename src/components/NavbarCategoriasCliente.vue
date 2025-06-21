@@ -39,7 +39,7 @@ export default {
 .navbar-categorias {
   display: flex;
   justify-content: space-around;
-  background-color: #2c3e50;
+  background-color: #2b2e4a;
   padding: 0.3rem 0.5rem;
   flex-wrap: wrap;
   gap: 0.5rem;

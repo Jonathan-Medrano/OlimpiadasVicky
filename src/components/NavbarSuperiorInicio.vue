@@ -50,7 +50,7 @@ export default {
 
 <style scoped>
 .navbar-superior {
-  background-color: #2e3a59;
+  background-color: #2b2e4a;
   color: white;
   display: flex;
   justify-content: space-between;

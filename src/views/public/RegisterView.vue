@@ -1,9 +1,6 @@
 <template>
   <div class="register-page">
     <div class="register-box">
-      <h2>Crear cuenta</h2>
-      <p>Registrate gratis para planear tu próxima aventura 🌍</p>
-
       <RegisterForm />
     </div>
   </div>

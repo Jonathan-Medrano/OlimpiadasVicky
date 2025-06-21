@@ -14,22 +14,21 @@ export default {
 
 <style scoped>
 .navbar-categorias {
-  background-color: #eee;
+  background-color: #2b2e4a;
   padding: 0.8rem 2rem;
   display: flex;
-  justify-content: center;
-  gap: 1.5rem;
+  justify-content: space-evenly;
   border-bottom: 2px solid #ccc;
 }
 
 .btn {
-  background-color: #6a4ca1;
   color: white;
   font-weight: bold;
   padding: 0.5rem 1.2rem;
-  border-radius: 20px;
   text-decoration: none;
   transition: background-color 0.2s ease;
+  display: flex;
+  justify-content: space-between;
 }
 
 .btn:hover {

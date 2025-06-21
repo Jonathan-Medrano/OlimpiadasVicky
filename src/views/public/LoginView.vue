@@ -53,13 +53,20 @@ export default {
 
         if (datos.success) {
           localStorage.setItem("usuario", JSON.stringify(datos.usuario));
-          await this.$router.push("/"); // Redirige a home
-          location.reload(); // Refresca para mostrar el navbar correcto
+
+          // Redirige según el rol
+          if (datos.usuario.rol === "cliente") {
+            await this.$router.push("/");
+          } else if (datos.usuario.rol === "admin") {
+            await this.$router.push("/admin");
+          } else {
+            this.error = "Rol desconocido";
+          }
         } else {
           this.error = datos.message || "Credenciales incorrectas";
         }
       } catch (e) {
-        (this.error = "Error al conectar con el servidor."), e;
+        this.error = "Error al conectar con el servidor.";
       }
     },
   },

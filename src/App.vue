@@ -1,12 +1,12 @@
 <template>
   <div id="app">
+    <!-- Navbar superior según usuario -->
     <component :is="navbarSeleccionado" />
-    <NavbarSuperiorInicio v-if="!usuario" />
-    <NavbarSuperiorCliente v-else-if="usuario.rol === 'cliente'" />
-    <NavbarSuperiorAdmin v-else-if="usuario.rol === 'admin'" />
 
-    <NavbarCategoriasCliente v-if="usuario?.rol === 'cliente'" />
-    <NavbarCategoriasAdmin v-if="usuario?.rol === 'admin' && esRutaAdmin" />
+    <!-- Navbar de categorías según usuario y ruta -->
+    <component v-if="navbarCategoriasSeleccionado" :is="navbarCategoriasSeleccionado" />
+
+    <!-- Contenido principal -->
     <router-view />
   </div>
 </template>
@@ -28,38 +28,35 @@ export default {
     NavbarCategoriasAdmin,
   },
   data() {
-  return {
-    usuario: null,
-  };
-},
-computed: {
-  // Navbar superior según el usuario
-  navbarSeleccionado() {
-    if (!this.usuario) return "NavbarSuperiorInicio";
-    if (this.usuario.rol === "admin") return "NavbarSuperiorAdmin";
-    return "NavbarSuperiorCliente";
+    return {
+      usuario: null,
+    };
   },
-
-  // Navbar de categorías según usuario y ruta
-  navbarCategoriasSeleccionado() {
-    if (!this.usuario) return null;
-    if (this.usuario.rol === "cliente") return "NavbarCategoriasCliente";
-    if (this.usuario.rol === "admin" && this.$route.path.startsWith("/admin")) {
-      return "NavbarCategoriasAdmin";
-    }
-    return null;
+  computed: {
+    navbarSeleccionado() {
+      if (!this.usuario) return "NavbarSuperiorInicio";
+      if (this.usuario.rol === "admin") return "NavbarSuperiorAdmin";
+      return "NavbarSuperiorCliente";
+    },
+    navbarCategoriasSeleccionado() {
+      if (!this.usuario) return null;
+      const ruta = this.$route.path.toLowerCase(); // aseguramos minúsculas
+      if (this.usuario.rol === "cliente") return "NavbarCategoriasCliente";
+      if (this.usuario.rol === "admin" && ruta.startsWith("/admin")) return "NavbarCategoriasAdmin";
+      return null;
+    },
   },
-},
-mounted() {
-  const datos = localStorage.getItem("usuario");
-  if (datos) this.usuario = JSON.parse(datos);
-},
-watch: {
-  $route() {
+  mounted() {
     const datos = localStorage.getItem("usuario");
-    this.usuario = datos ? JSON.parse(datos) : null;
+    if (datos) this.usuario = JSON.parse(datos);
   },
-},
+  watch: {
+    $route() {
+      const datos = localStorage.getItem("usuario");
+      this.usuario = datos ? JSON.parse(datos) : null;
+    },
+  },
+};
 </script>
 
 <style>

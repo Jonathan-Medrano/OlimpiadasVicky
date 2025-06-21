@@ -58,7 +58,7 @@ export default {
             this.$router.push("/admin");
             await location.reload();
           } else if (respuesta.usuario.rol === "cliente") {
-            this.$router.push("/cliente/inicio");
+            this.$router.push("/");
             await location.reload();
           }
         } else {
