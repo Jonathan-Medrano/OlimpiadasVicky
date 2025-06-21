@@ -1,28 +1,51 @@
 <template>
-  <div>
-    <NavbarSuperior />
-    <NavbarCategorias />
+  <div id="app">
+    <component :is="navbarSeleccionado" />
+    <NavbarCategoriasCliente v-if="usuario && usuario.rol === 'cliente'" />
     <router-view />
-    <Footer />
   </div>
 </template>
 
 <script>
-import NavbarSuperior from "@/components/NavbarSuperiorInicio.vue";
-import NavbarCategorias from "@/components/NavbarCategorias.vue";
+import NavbarSuperiorInicio from "@/components/NavbarSuperiorInicio.vue";
+import NavbarSuperiorCliente from "@/components/NavbarSuperiorCliente.vue";
+import NavbarSuperiorAdmin from "@/components/NavbarSuperiorAdmin.vue";
+import NavbarCategoriasCliente from "@/components/NavbarCategoriasCliente.vue";
 
 export default {
   components: {
-    NavbarSuperior,
-    NavbarCategorias,
+    NavbarSuperiorInicio,
+    NavbarSuperiorCliente,
+    NavbarSuperiorAdmin,
+    NavbarCategoriasCliente,
+  },
+  data() {
+    return {
+      usuario: null,
+    };
+  },
+  computed: {
+    navbarSeleccionado() {
+      if (!this.usuario) return "NavbarSuperiorInicio";
+      if (this.usuario.rol === "admin") return "NavbarSuperiorAdmin";
+      return "NavbarSuperiorCliente";
+    },
+  },
+
+  created() {
+    const datos = localStorage.getItem("usuario");
+    if (datos) {
+      this.usuario = JSON.parse(datos);
+    }
   },
 };
 </script>
 
 <style>
-* {
+body {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+  background-color: #f8f8f8;
 }
 </style>

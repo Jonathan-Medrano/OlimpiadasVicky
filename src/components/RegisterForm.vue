@@ -92,46 +92,80 @@ export default {
 </script>
 
 <style scoped>
-.register-form {
-  max-width: 400px;
-  margin: 2rem auto;
+.registro-contenedor {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 70px;
+  min-height: 80vh;
+  background: linear-gradient(to right, #f0fff0, #f7f7f7);
+}
+
+.registro-box {
+  background-color: #d3b8e1;
   padding: 2rem;
-  background: #f0f0f0;
   border-radius: 10px;
-  box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+  width: 420px;
+  text-align: center;
+  border: 2px solid #333;
+}
+
+.icono-usuario img {
+  width: 60px;
+  height: 60px;
+  margin-bottom: 10px;
+}
+
+h2 {
+  margin: 0;
+  font-size: 24px;
+  color: #333;
+}
+
+.subtitulo {
+  margin-bottom: 1rem;
+  color: #4b4b4b;
+  font-size: 0.9rem;
 }
 
 .form-group {
-  margin-bottom: 1.2rem;
+  text-align: left;
+  margin-bottom: 15px;
 }
 
 label {
   display: block;
-  margin-bottom: 0.5rem;
   font-weight: bold;
+  margin-bottom: 5px;
 }
 
-input {
+input,
+select {
   width: 100%;
-  padding: 0.6rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  box-sizing: border-box;
-}
-
-.btn-register {
-  width: 100%;
-  padding: 0.75rem;
-  background-color: #4caf50;
-  color: white;
-  font-weight: bold;
+  padding: 10px;
   border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s;
+  border-radius: 8px;
+  font-size: 1rem;
 }
 
-.btn-register:hover {
-  background-color: #45a049;
+button {
+  background-color: #f18193;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  font-size: 1rem;
+  border-radius: 20px;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.link-inicio {
+  margin-top: 10px;
+  font-size: 0.9rem;
+}
+
+.link-inicio a {
+  color: #3333aa;
+  text-decoration: underline;
 }
 </style>
