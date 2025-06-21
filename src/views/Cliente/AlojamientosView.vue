@@ -4,7 +4,7 @@ v
     <h2>Alojamientos disponibles 🏨</h2>
 
     <div v-if="productos.length === 0">
-      <p>No hay alojamientos disponibles en este momento.</p>
+      <p>No ay alojamientos disponibles en este momento.</p>
     </div>
 
     <div class="grid">
