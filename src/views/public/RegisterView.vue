@@ -29,6 +29,7 @@ export default {
 .register-box {
   background-color: white;
   padding: 2rem;
+  margin-top: 20px;
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   width: 90%;

@@ -42,7 +42,9 @@
       <textarea v-model="producto.condiciones" id="condiciones" rows="2" />
     </div>
 
-    <button type="submit" class="btn-guardar">Guardar producto</button>
+    <div class="btn-container">
+      <button type="submit" class="btn-guardar">Guardar producto ✨</button>
+    </div>
   </form>
 </template>
 
@@ -101,29 +103,71 @@ export default {
 
 <style scoped>
 .form-producto {
-  background-color: #f5f5f5;
-  padding: 1.5rem;
-  border-radius: 10px;
-  margin-bottom: 2rem;
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 16px;
   max-width: 600px;
+  margin: 2rem auto;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
+
 .form-group {
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #2c2c54;
+}
+
 input,
 select,
 textarea {
   width: 100%;
-  padding: 0.6rem;
-  border-radius: 5px;
+  padding: 0.7rem;
+  border-radius: 8px;
   border: 1px solid #ccc;
+  font-size: 1rem;
+  font-family: inherit;
+  background-color: #f9f9f9;
+  transition: border 0.3s;
 }
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: #7e57c2;
+  outline: none;
+}
+
+.btn-container {
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
 .btn-guardar {
-  background-color: #2196f3;
+  background-color: #c084fc;
   color: white;
-  padding: 0.7rem 1.2rem;
+  padding: 0.75rem 1.5rem;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+}
+
+.btn-guardar:hover {
+  background-color: #a855f7;
+}
+
+@media (max-width: 640px) {
+  .form-producto {
+    padding: 1.5rem;
+    margin: 1rem;
+  }
 }
 </style>
