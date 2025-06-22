@@ -34,7 +34,7 @@
             <option value="" disabled selected>Seleccioná tu género</option>
             <option value="Femenino">Femenino</option>
             <option value="Masculino">Masculino</option>
-            <option value="Otro">Otro</option>
+            <option value="No Binarie">No Binarie</option>
           </select>
         </div>
 
@@ -80,7 +80,6 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-top: 70px;
   min-height: 80vh;
   background: linear-gradient(to right, #f0fff0, #f7f7f7);
 }

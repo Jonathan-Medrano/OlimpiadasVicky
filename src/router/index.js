@@ -16,6 +16,7 @@ import AdminView from "@/views/AdminView.vue";
 import AdminUsuariosView from "@/views/AdminUsuariosView.vue";
 import PanelProductos from "@/views/PanelProductos.vue";
 import AdminComprasView from "@/views/AdminComprasView.vue";
+import InsertarProductoView from "@/views/InsertarProductoView.vue";
 
 const routes = [
   { path: "/", component: HomeView },
@@ -31,6 +32,7 @@ const routes = [
   { path: "/admin/usuarios", component: AdminUsuariosView },
   { path: "/admin/productos", component: PanelProductos },
   { path: "/admin/compras", component: AdminComprasView },
+  { path: "/admin/insertar", component: InsertarProductoView },
 ];
 
 const router = createRouter({
