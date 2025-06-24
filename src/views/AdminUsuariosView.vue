@@ -37,7 +37,7 @@ export default {
   },
   async mounted() {
     try {
-      const res = await fetch("http://localhost/miapi/get_usuarios.php");
+      const res = await fetch("http://localhost/miapi/tables.php?action=users");
       const data = await res.json();
       this.usuarios = data.usuarios || [];
     } catch (error) {

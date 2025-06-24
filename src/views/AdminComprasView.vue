@@ -55,7 +55,7 @@ export default {
   },
   async mounted() {
     try {
-      const res = await fetch("http://localhost/miapi/get_compras.php");
+      const res = await fetch("http://localhost/miapi/tables.php?action=purchases");
       const data = await res.json();
       this.compras = data.compras || [];
     } catch (error) {

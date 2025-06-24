@@ -42,11 +42,14 @@ export default {
   },
   methods: {
     async iniciarSesion() {
-      this.error = "";
       try {
-        const respuesta = await fetch("http://localhost/miapi/usuarios/login.php", {
+        this.error = "";
+        const formData = new FormData();
+        formData.append("email", this.correo);
+        formData.append("clave", this.contrasena);
+        const respuesta = await fetch("http://localhost/miapi/usuarios/sessions.php?action=login", {
           method: "POST",
-          body: JSON.stringify({ correo: this.correo, contrasena: this.contrasena }),
+          body: formData,
         });
 
         const datos = await respuesta.json();
@@ -54,7 +57,6 @@ export default {
         if (datos.success) {
           localStorage.setItem("usuario", JSON.stringify(datos.usuario));
 
-          // Redirige según el rol
           if (datos.usuario.rol === "cliente") {
             await this.$router.push("/");
           } else if (datos.usuario.rol === "admin") {

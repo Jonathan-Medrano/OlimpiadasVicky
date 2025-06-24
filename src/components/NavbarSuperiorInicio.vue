@@ -12,7 +12,7 @@
       </template>
       <template v-else>
         <router-link to="/login" class="btn">Iniciar sesión</router-link>
-        <router-link to="/register" class="btn btn-secundario">Registrarse</router-link>
+        <router-link to="/register" class="btn-secundario">Registrarse</router-link>
       </template>
     </div>
   </div>
@@ -85,17 +85,34 @@ export default {
 }
 
 .btn {
-  background: #ff7e7e;
+  background: #fff;
   border: none;
   border-radius: 20px;
   padding: 0.4rem 1rem;
-  color: white;
+  color: #f57373;
   font-weight: bold;
   cursor: pointer;
   text-decoration: none;
 }
 .btn-secundario {
-  background: #ff9d9d;
+  background: none;
+  border: 1px solid #f57373;
+  border-radius: 20px;
+  padding: 0.4rem 1rem;
+  color: #f57373;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn:hover {
+  background-color: #f57373;
+  color: white;
+}
+
+.btn-secundario:hover {
+  background-color: #f57373;
+  color: white;
 }
 
 .icono {
