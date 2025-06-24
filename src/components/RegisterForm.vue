@@ -39,6 +39,11 @@
         </div>
 
         <div class="form-group">
+          <label for="nacimiento">Nacimiento:</label>
+          <input type="date" id="nacimiento" v-model="nacimiento" required />
+        </div>
+
+        <div class="form-group">
           <label for="contrasena">Contraseña:</label>
           <input type="password" id="contrasena" v-model="contrasena" required />
         </div>
@@ -67,9 +72,44 @@ export default {
     };
   },
   methods: {
-    registrar() {
-      // Lógica para enviar datos al backend
-      console.log("Registrado:", this.nombre, this.correo);
+    async registrar() {
+      try {
+        const formData = new FormData();
+        formData.append("nombre", this.nombre);
+        formData.append("apellido", this.apellido);
+        formData.append("email", this.correo);
+        formData.append("telefono", this.telefono);
+        formData.append("genero", this.genero);
+        formData.append("nacimiento", this.nacimiento);
+        formData.append("password", this.contrasena);
+
+        const response = await fetch(
+          "http://localhost/miapi/usuarios/sessions.php?action=register",
+          {
+            method: "POST",
+            body: formData,
+          }
+        );
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error(`Error HTTP: ${response.status} - ${errorText}`);
+        }
+
+        const data = await response.json();
+
+        console.log("Respuesta JSON:", data);
+
+        if (data.success) {
+          alert("Registro exitoso");
+          await this.$router.push("/login");
+        } else {
+          alert("Error: " + (data.message || "No se pudo registrar"));
+        }
+      } catch (error) {
+        console.error("Error en el registro:", error.message);
+        alert("Error al conectar con el servidor o procesar la respuesta");
+      }
     },
   },
 };

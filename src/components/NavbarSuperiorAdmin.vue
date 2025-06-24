@@ -15,9 +15,18 @@
 export default {
   name: "NavbarSuperiorAdmin",
   methods: {
-    cerrarSesion() {
-      localStorage.removeItem("usuario");
-      this.$router.push("/").then(() => location.reload());
+    async cerrarSesion() {
+      try {
+        await fetch("http://localhost/miapi/usuarios/sessions.php?action=logout", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+        });
+        localStorage.removeItem("usuario");
+        this.usuario = null;
+        this.$router.push("/");
+      } catch (e) {
+        console.error("Error cerrando sesión:", e);
+      }
     },
   },
 };

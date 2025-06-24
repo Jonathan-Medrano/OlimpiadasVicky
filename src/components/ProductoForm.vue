@@ -58,8 +58,8 @@ export default {
         nombre: "",
         descripcion: "",
         tipo: "",
-        precio_unitario: null,
-        cantidad_disponible: null,
+        precio_unitario: "",
+        cantidad_disponible: "",
         condiciones: "",
       },
     };
@@ -67,19 +67,24 @@ export default {
   methods: {
     async guardarProducto() {
       try {
-        const res = await fetch("http://localhost/miapi/crear_producto.php", {
+        const formData = new FormData();
+        formData.append("codigo", this.producto.codigo_producto);
+        formData.append("nombre", this.producto.nombre);
+        formData.append("descripcion", this.producto.descripcion);
+        formData.append("tipo", this.producto.tipo);
+        formData.append("precio", this.producto.precio_unitario);
+        formData.append("stock", this.producto.cantidad_disponible);
+        formData.append("condiciones", this.producto.condiciones);
+        const res = await fetch("http://localhost/miapi/tables.php?action=insertProducts", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(this.producto),
+          body: formData,
         });
 
         const data = await res.json();
         if (data.success) {
-          alert("Producto guardado con éxito");
           this.$emit("producto-agregado");
           this.limpiarFormulario();
         } else {
-          alert(data.message || "Error al guardar");
         }
       } catch (err) {
         console.error(err);
