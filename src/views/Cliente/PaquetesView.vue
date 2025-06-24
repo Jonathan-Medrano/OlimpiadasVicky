@@ -1,6 +1,7 @@
 <template>
   <div class="paquetes">
-    <h2>Paquetes turísticos</h2>
+    <h1>PAQUETES TURÍSTICOS</h1>
+    <br />
 
     <div v-if="paquetes.length === 0">
       <p>No hay paquetes disponibles por el momento.</p>
@@ -8,11 +9,11 @@
 
     <div v-else class="grid">
       <div class="card" v-for="p in paquetes" :key="p.id">
-        <img :src="p.imagen" alt="imagen" />
-        <h3>{{ p.nombre }}</h3>
-        <p class="destino">Destino: {{ p.destino }}</p>
+        <img :src="p.imagen || defaultImg" alt="imagen" />
+        <h3>{{ p.Nombre }}</h3>
+        <p class="tipo">{{ p.tipo }}</p>
         <p class="descripcion">{{ p.descripcion }}</p>
-        <p class="precio">$ {{ p.precio_unitario }}</p>
+        <p class="precio">$ {{ p.Precio }}</p>
         <button @click="agregarAlCarrito(p)">Agregar al carrito 🛒</button>
       </div>
     </div>
@@ -27,6 +28,7 @@ export default {
       paquetes: [],
     };
   },
+
   mounted() {
     this.obtenerPaquetes();
   },
@@ -62,11 +64,15 @@ export default {
 .paquetes {
   padding: 2rem;
   font-family: "Segoe UI", sans-serif;
+  background-color: #c9d1e9;
 }
 
-h2 {
+h1 {
   text-align: center;
   margin-bottom: 1.5rem;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  color: #1f3b58;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .grid {

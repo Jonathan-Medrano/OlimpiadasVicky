@@ -11,6 +11,9 @@ import VehiculosView from "@/views/Cliente/VehiculosView.vue";
 import AlojamientosView from "@/views/Cliente/AlojamientosView.vue";
 import ActividadesView from "@/views/Cliente/ActividadesView.vue";
 import AyudaView from "@/views/Cliente/AyudaView.vue";
+import VuelosView from "@/views/Cliente/VuelosView.vue";
+import PerfilClienteView from "@/views/Cliente/PerfilClienteView.vue";
+import CarritoView from "@/views/Cliente/CarritoView.vue";
 
 import AdminView from "@/views/AdminView.vue";
 import AdminUsuariosView from "@/views/AdminUsuariosView.vue";
@@ -28,8 +31,11 @@ const routes = [
   { path: "/vehiculos", component: VehiculosView },
   { path: "/vuelos", component: VuelosView },
   { path: "/alojamientos", component: AlojamientosView },
+  { path: "/carrito", component: CarritoView },
   { path: "/actividades", component: ActividadesView },
+  { path: "/vuelos", component: VuelosView },
   { path: "/ayuda", component: AyudaView },
+  { path: "/perfil", component: PerfilClienteView },
   { path: "/admin", component: AdminView },
   { path: "/admin/usuarios", component: AdminUsuariosView },
   { path: "/admin/productos", component: PanelProductos },

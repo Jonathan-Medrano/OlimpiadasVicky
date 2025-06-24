@@ -1,47 +1,44 @@
 <template>
   <div class="actividades">
-    <h2>Actividades turísticas 🎟️</h2>
+    <h1>ACTIVIDADES PARA REALIZAR</h1>
+    <br />
 
-    <div v-if="productos.length === 0">
-      <p>No hay actividades disponibles actualmente.</p>
+    <div v-if="actividades.length === 0">
+      <p>No hay actividades disponibles por el momento.</p>
     </div>
 
-    <div v-else class="grid">
-      <ProductCard
-        v-for="actividad in productos"
-        :key="actividad.id"
-        :producto="actividad"
-        @agregar-carrito="agregarAlCarrito"
-      />
+    <div class="grid">
+      <div class="card" v-for="a in actividades" :key="a.ID_Producto">
+        <img :src="a.imagen || defaultImg" alt="imagen" />
+        <h3>{{ a.Nombre }}</h3>
+        <p class="condiciones">{{ a.condiciones }}</p>
+        <p class="descripcion">{{ a.descripcion }}</p>
+        <p class="precio">$ {{ a.Precio }}</p>
+        <button @click="agregarAlCarrito(p)">Agregar al carrito 🛒</button>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import ProductCard from "@/components/ProductCard.vue";
-
 export default {
-  name: "ActividadesView",
-  components: { ProductCard },
+  name: "actividadesView",
   data() {
     return {
-      productos: [],
+      actividades: [],
     };
   },
-  mounted() {
-    this.obtenerActividades();
+  async mounted() {
+    try {
+      const res = await fetch("http://localhost/miapi/products.php?action=activities");
+      const data = await res.json();
+      this.actividades = data.actividades || [];
+    } catch (error) {
+      console.error("Error al cargar los actividades:", error);
+      alert("Error al cargar los actividades");
+    }
   },
   methods: {
-    async obtenerActividades() {
-      try {
-        const res = await fetch("http://localhost/miapi/products.php?action=activities");
-        const data = await res.json();
-        this.productos = data.actividades || [];
-      } catch (error) {
-        console.error("Error al cargar actividades:", error);
-        alert("No se pudieron cargar las actividades");
-      }
-    },
     agregarAlCarrito(producto) {
       let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
@@ -53,7 +50,7 @@ export default {
       }
 
       localStorage.setItem("carrito", JSON.stringify(carrito));
-      alert("Actividad agregada al carrito");
+      alert("Vuelo agregado al carrito");
     },
   },
 };
@@ -62,11 +59,72 @@ export default {
 <style scoped>
 .actividades {
   padding: 2rem;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  background-color: #c9d1e9;
 }
+
+h1 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #1f3b58;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1.5rem;
-  margin-top: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.2rem;
+}
+
+.card {
+  background-color: #f8f8f8;
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-bottom: 0.8rem;
+}
+
+.card h3 {
+  font-size: 1.1rem;
+  margin: 0.3rem 0;
+}
+
+.card .destino {
+  font-weight: bold;
+  color: #555;
+}
+
+.card .descripcion {
+  font-size: 0.9rem;
+  color: #666;
+  margin: 0.5rem 0;
+}
+
+.card .precio {
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin: 0.8rem 0;
+  color: #007bff;
+}
+
+.card button {
+  padding: 0.5rem 1rem;
+  border: none;
+  background-color: #7e60ff;
+  color: white;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.card button:hover {
+  background-color: #614dd4;
 }
 </style>

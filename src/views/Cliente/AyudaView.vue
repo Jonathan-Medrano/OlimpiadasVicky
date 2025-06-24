@@ -85,32 +85,92 @@ export default {
 <style scoped>
 .ayuda {
   padding: 2rem;
+  max-width: 900px;
+  margin: auto;
+  color: #2c3e50;
 }
-.faq {
+
+.ayuda h2 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  color: #2c3e50;
+  text-align: center;
+}
+
+.ayuda p {
+  text-align: center;
+  color: #555;
   margin-bottom: 2rem;
 }
-.contacto {
-  background-color: #f9f9f9;
+
+.faq {
+  background-color: #eef1f8;
   padding: 1.5rem;
-  border-radius: 10px;
-  max-width: 600px;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 }
-.form-group {
+
+.faq h3 {
+  color: #2e3a59;
   margin-bottom: 1rem;
 }
+
+.faq li {
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.contacto {
+  background: linear-gradient(to right, #a18cd1, #fbc2eb);
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.contacto h3 {
+  color: white;
+  margin-bottom: 1rem;
+}
+
+.form-group {
+  margin-bottom: 1.2rem;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: white;
+  font-weight: bold;
+}
+
 input,
 textarea {
   width: 100%;
-  padding: 0.6rem;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-}
-button {
-  background-color: #2e3a59;
-  color: white;
-  padding: 0.6rem 1.2rem;
+  padding: 0.7rem;
+  border-radius: 8px;
   border: none;
-  border-radius: 5px;
+  outline: none;
+  font-size: 1rem;
+}
+
+textarea {
+  resize: none;
+}
+
+button {
+  background-color: #2c3e50;
+  color: white;
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 1rem;
   cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #1a253a;
 }
 </style>
