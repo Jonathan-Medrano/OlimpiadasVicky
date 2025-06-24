@@ -61,12 +61,14 @@ export default {
 <style scoped>
 .admin-productos {
   padding: 2rem;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Montserrat", sans-serif;
   background-color: #f9f9fb;
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   max-width: 1000px;
   margin: 2rem auto;
+  color: #4a4a4a;
+  border: 1px solid #d1d9e6; /* borde suave para contenedor */
 }
 
 h2 {
@@ -92,6 +94,8 @@ h2 {
   display: block;
   margin: 0 auto 1.8rem auto;
   box-shadow: 0 4px 8px rgba(120, 69, 160, 0.5);
+  text-decoration: none; /* sacar subrayado del texto */
+  font-family: "Montserrat", sans-serif; /* tipografía igual a la tabla */
 }
 
 .Insertar:hover {
@@ -107,6 +111,7 @@ h2 {
   background-color: white;
   border-radius: 10px;
   overflow: hidden;
+  border: 1px solid #c3cfd9; /* borde suave para la tabla */
 }
 
 th {
@@ -117,6 +122,11 @@ th {
   font-size: 0.95rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  border-right: 1px solid #485a7a;
+}
+
+th:last-child {
+  border-right: none;
 }
 
 td {
@@ -126,12 +136,16 @@ td {
   font-weight: 500;
   vertical-align: middle;
   border-bottom: 1px solid #f0f0f0;
+  background-color: #fdfdfd;
+  border-radius: 6px;
+  border: 1px solid #e1e7f0; /* borde suave en cada celda */
 }
 
 tbody tr {
   background-color: #fdfdfd;
   transition: background-color 0.25s ease;
   border-radius: 6px;
+  display: table-row; /* para mantener el diseño correcto */
 }
 
 tbody tr:hover {
