@@ -38,11 +38,13 @@ h1 {
   font-size: 2rem;
   font-weight: bold;
   margin-bottom: 1rem;
+  font-family: "Montserrat", sans-serif;
 }
 
 p {
   font-size: 1.1rem;
   margin-bottom: 2rem;
+  font-family: "Poppins", sans-serif;
 }
 
 .explorar-btn {
@@ -55,6 +57,7 @@ p {
   border-radius: 10px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  font-family: "Caprasimo", sans-serif;
 }
 
 .explorar-btn:hover {

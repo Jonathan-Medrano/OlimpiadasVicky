@@ -22,14 +22,29 @@ export default {
   name: "NavbarSuperiorCliente",
   methods: {
     async cerrarSesion() {
+      console.log("Cerrar sesión clickeado");
       try {
-        await fetch("http://localhost/miapi/usuarios/sessions.php?action=logout", {
+        const res = await fetch("http://localhost/miapi/usuarios/sessions.php?action=logout", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
         });
-        localStorage.removeItem("usuario");
-        this.usuario = null;
-        this.$router.push("/");
+        console.log("Respuesta fetch:", res);
+
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+
+        const data = await res.json(); // Si el backend devuelve JSON
+        console.log("Datos recibidos:", data);
+
+        // Si la respuesta indica éxito:
+        if (data.success) {
+          localStorage.removeItem("usuario");
+          this.usuario = null;
+          this.$router.push("/");
+        } else {
+          console.error("Error en logout backend:", data.message || data);
+        }
       } catch (e) {
         console.error("Error cerrando sesión:", e);
       }
