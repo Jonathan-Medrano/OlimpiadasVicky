@@ -1,7 +1,10 @@
 <!-- src/views/public/InfoView.vue -->
 <template>
   <div class="info-container">
-    <h1>Conocé Turity</h1>
+    <div class="titulo-logo">
+      <img src="@/assets/logo.png" class="logo" />
+      <h1>Conocé Turity</h1>
+    </div>
     <p>
       <span class="resaltado">Viajar con Turity</span> no es simplemente trasladarse de un lugar a
       otro. Es dejarse sorprender, relajarse, disfrutar y vivir momentos únicos, sabiendo que
@@ -61,5 +64,24 @@ h1 {
 .resaltado {
   font-weight: bold;
   color: #5a2ca0;
+}
+
+.titulo-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.logo {
+  width: 60px;
+  height: auto;
+}
+
+h1 {
+  margin: 0;
+  font-size: 2rem;
+  color: #2c3e70;
 }
 </style>

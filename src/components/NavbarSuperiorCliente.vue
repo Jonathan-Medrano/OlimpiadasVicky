@@ -2,11 +2,16 @@
   <div class="navbar-superior">
     <router-link to="/" class="logo-area">
       <img src="@/assets/logo.png" class="logo" />
-      <span class="titulo">Planea fácil, viaja mejor</span>
+      <span class="titulo"><strong>Planea fácil, viaja mejor</strong></span>
     </router-link>
 
     <div class="acciones">
-      <router-link to="/perfil" class="btn btn-perfil">Mi Perfil</router-link>
+      <router-link
+        to="carrito"
+        class="carrito fas fa-shopping-cart"
+        aria-hidden="true"
+      ></router-link>
+      <router-link to="/perfil" class="btn-perfil fas fa-circle-user"></router-link>
       <button @click="cerrarSesion" class="btn">Cerrar sesión</button>
     </div>
   </div>
@@ -56,8 +61,25 @@ export default {
 }
 
 .titulo {
-  font-size: 1.3rem;
-  font-weight: bold;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 1.4rem;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+  margin-left: 0.5rem;
+
+  opacity: 0;
+  transform: translateY(10px);
+  animation: aparecerTitulo 1s ease-out forwards;
+}
+
+/* Animación */
+@keyframes aparecerTitulo {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .acciones {
@@ -75,8 +97,28 @@ export default {
   cursor: pointer;
   text-decoration: none;
 }
-
 .btn-perfil {
-  background-color: #a57df4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px; /* o el tamaño que prefieras */
+  height: 40px;
+  background-color: #a573f5; /* mismo color que Cerrar sesión */
+  border: none;
+  border-radius: 20px; /* círculo */
+  color: white;
+  cursor: pointer;
+  font-size: 18px;
+}
+.carrito {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
 }
 </style>

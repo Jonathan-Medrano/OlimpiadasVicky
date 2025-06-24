@@ -10,6 +10,7 @@
     <table v-else class="tabla-carrito">
       <thead>
         <tr>
+          <th>Imagen</th>
           <th>Producto</th>
           <th>Precio</th>
           <th>Cantidad</th>
@@ -19,24 +20,25 @@
       </thead>
       <tbody>
         <tr v-for="(item, i) in carrito" :key="i">
-          <td>{{ item.nombre }}</td>
-          <td>${{ item.precio_unitario }}</td>
+          <td><img :src="item.imagen || defaultImg" alt="imagen" width="200px" /></td>
+          <td>{{ item.Nombre }}</td>
+          <td>${{ item.Precio }}</td>
           <td>
             <input
               type="number"
-              v-model.number="item.cantidad"
+              v-model.number="item.Cantidad"
               @input="actualizarCarrito"
               min="1"
             />
           </td>
-          <td>${{ item.precio_unitario * item.cantidad }}</td>
+          <td>${{ item.Precio_Unitario * item.Cantidad }}</td>
           <td><button @click="eliminar(i)">Eliminar</button></td>
         </tr>
       </tbody>
     </table>
 
     <div v-if="carrito.length > 0" class="total">
-      <p><strong>Total:</strong> ${{ total }}</p>
+      <p><strong>Total:</strong> ${{ total.toFixed(2) }}</p>
       <button @click="realizarCompra">Confirmar compra</button>
     </div>
   </div>
@@ -52,7 +54,7 @@ export default {
   },
   computed: {
     total() {
-      return this.carrito.reduce((acc, item) => acc + item.precio_unitario * item.cantidad, 0);
+      return this.carrito.reduce((acc, item) => acc + item.Precio_Unitario * item.Cantidad, 0);
     },
   },
   methods: {
@@ -104,36 +106,78 @@ export default {
 <style scoped>
 .carrito {
   padding: 2rem;
+  max-width: 1000px;
+  margin: auto;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.08);
+}
+
+h2 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #2e3a59;
 }
 
 .tabla-carrito {
   width: 100%;
   border-collapse: collapse;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
 }
 
-th,
+th {
+  background-color: #2e3a59;
+  color: white;
+  padding: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
 td {
-  border: 1px solid #ccc;
-  padding: 0.8rem;
+  padding: 1rem;
+  border-bottom: 1px solid #ddd;
   text-align: center;
+  vertical-align: middle;
+}
+
+img {
+  max-width: 120px;
+  border-radius: 8px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
 input[type="number"] {
-  width: 60px;
-}
-
-.total {
-  text-align: right;
-  font-size: 1.2rem;
+  width: 70px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  text-align: center;
 }
 
 button {
   padding: 0.5rem 1rem;
-  background-color: #2e3a59;
+  background-color: #ff6b6b;
   color: white;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  background-color: #e04646;
+}
+
+.total {
+  text-align: right;
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #2e3a59;
+}
+
+.total button {
+  margin-top: 1rem;
 }
 </style>
