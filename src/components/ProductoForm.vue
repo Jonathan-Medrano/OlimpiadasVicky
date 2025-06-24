@@ -42,6 +42,11 @@
       <textarea v-model="producto.condiciones" id="condiciones" rows="2" />
     </div>
 
+    <div class="form-group">
+      <label for="imagen">Link de Imagen</label>
+      <input type="text" v-model.number="producto.imagen" id="imagen" required />
+    </div>
+
     <div class="btn-container">
       <button type="submit" class="btn-guardar">Guardar producto ✨</button>
     </div>
@@ -49,6 +54,7 @@
 </template>
 
 <script>
+const imagenes = import.meta.glob("/src/assets/productsImage/*.{jpg,png}", { eager: true });
 export default {
   name: "ProductoForm",
   data() {
@@ -61,6 +67,7 @@ export default {
         precio_unitario: "",
         cantidad_disponible: "",
         condiciones: "",
+        imagen: "",
       },
     };
   },
@@ -75,6 +82,7 @@ export default {
         formData.append("precio", this.producto.precio_unitario);
         formData.append("stock", this.producto.cantidad_disponible);
         formData.append("condiciones", this.producto.condiciones);
+        formData.append("imagen", this.producto.imagen);
         const res = await fetch("http://localhost/miapi/tables.php?action=insertProducts", {
           method: "POST",
           body: formData,

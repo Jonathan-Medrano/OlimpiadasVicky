@@ -7,7 +7,7 @@ v
       <p>No ay alojamientos disponibles en este momento.</p>
     </div>
 
-    <div class="grid">
+    <div v-else class="grid">
       <ProductCard
         v-for="alojamiento in productos"
         :key="alojamiento.id"
@@ -29,17 +29,20 @@ export default {
       productos: [],
     };
   },
-  async mounted() {
-    try {
-      const res = await fetch("http://localhost/miapi/get_productos.php?tipo=Alojamiento");
-      const data = await res.json();
-      this.productos = data.productos || [];
-    } catch (error) {
-      console.error("Error al cargar alojamientos:", error);
-      alert("No se pudieron cargar los alojamientos");
-    }
+  mounted() {
+    this.obtenerAlojamientos();
   },
   methods: {
+    async obtenerAlojamientos() {
+      try {
+        const res = await fetch("http://localhost/miapi/products.php?action=accommodation");
+        const data = await res.json();
+        this.productos = data.alojamientos || [];
+      } catch (error) {
+        console.error("Error al cargar alojamientos:", error);
+        alert("No se pudieron cargar los alojamientos");
+      }
+    },
     agregarAlCarrito(producto) {
       let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 

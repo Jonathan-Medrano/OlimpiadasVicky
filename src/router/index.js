@@ -17,6 +17,7 @@ import AdminUsuariosView from "@/views/AdminUsuariosView.vue";
 import PanelProductos from "@/views/PanelProductos.vue";
 import AdminComprasView from "@/views/AdminComprasView.vue";
 import InsertarProductoView from "@/views/InsertarProductoView.vue";
+import VuelosView from "@/views/Cliente/VuelosView.vue";
 
 const routes = [
   { path: "/", component: HomeView },
@@ -25,6 +26,7 @@ const routes = [
   { path: "/register", component: RegisterView },
   { path: "/paquetes", component: PaquetesView },
   { path: "/vehiculos", component: VehiculosView },
+  { path: "/vuelos", component: VuelosView },
   { path: "/alojamientos", component: AlojamientosView },
   { path: "/actividades", component: ActividadesView },
   { path: "/ayuda", component: AyudaView },

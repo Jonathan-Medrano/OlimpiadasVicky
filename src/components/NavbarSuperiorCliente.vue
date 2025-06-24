@@ -6,7 +6,7 @@
     </router-link>
 
     <div class="acciones">
-      <router-link to="/perfil" class="btn btn-perfil">Mi Perfil</router-link>
+      <router-link to="/perfil" class="btn btn-perfil fa fa-circle-user"></router-link>
       <button @click="cerrarSesion" class="btn">Cerrar sesión</button>
     </div>
   </div>

@@ -1,24 +1,31 @@
 <template>
   <div class="vehiculos-view">
-    <h1>Vehículos disponibles</h1>
-    <div class="productos-grid">
-      <ProductCard v-for="producto in vehiculos" :key="producto.ID_producto" :producto="producto" />
+    <h2>Vehículos disponibles</h2>
+
+    <div v-if="productos.length === 0">
+      <p>No hay Vehículos disponibles actualmente.</p>
+    </div>
+
+    <div v-else class="grid">
+      <ProductCard
+        v-for="vehiculo in productos"
+        :key="vehiculo.id"
+        :producto="vehiculo"
+        @agregar-carrito="agregarAlCarrito"
+      />
     </div>
   </div>
 </template>
 
 <script>
-import axios from "axios";
 import ProductCard from "@/components/ProductCard.vue";
 
 export default {
   name: "VehiculosView",
-  components: {
-    ProductCard,
-  },
+  components: { ProductCard },
   data() {
     return {
-      vehiculos: [],
+      productos: [],
     };
   },
   mounted() {
@@ -27,13 +34,25 @@ export default {
   methods: {
     async obtenerVehiculos() {
       try {
-        const response = await axios.get("http://localhost/api/obtener_productos.php");
-        this.vehiculos = response.data.filter(
-          (producto) => producto.categoria.toLowerCase() === "vehiculos"
-        );
+        const res = await fetch("http://localhost/miapi/products.php?action=vehicles");
+        const data = await res.json();
+        this.productos = data.vehiculos;
       } catch (error) {
         console.error("Error al obtener productos:", error);
       }
+    },
+    agregarAlCarrito(producto) {
+      let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+
+      const existente = carrito.find((item) => item.id === producto.id);
+      if (existente) {
+        existente.cantidad += 1;
+      } else {
+        carrito.push({ ...producto, cantidad: 1 });
+      }
+
+      localStorage.setItem("carrito", JSON.stringify(carrito));
+      alert("Alojamiento agregado al carrito");
     },
   },
 };
@@ -42,13 +61,12 @@ export default {
 <style scoped>
 .vehiculos-view {
   padding: 2rem;
-  text-align: center;
 }
 
-.productos-grid {
+.grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 2rem;
-  margin-top: 2rem;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
 }
 </style>

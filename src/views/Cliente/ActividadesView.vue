@@ -6,7 +6,7 @@
       <p>No hay actividades disponibles actualmente.</p>
     </div>
 
-    <div class="grid">
+    <div v-else class="grid">
       <ProductCard
         v-for="actividad in productos"
         :key="actividad.id"
@@ -28,17 +28,20 @@ export default {
       productos: [],
     };
   },
-  async mounted() {
-    try {
-      const res = await fetch("http://localhost/miapi/get_productos.php?tipo=Actividad");
-      const data = await res.json();
-      this.productos = data.productos || [];
-    } catch (error) {
-      console.error("Error al cargar actividades:", error);
-      alert("No se pudieron cargar las actividades");
-    }
+  mounted() {
+    this.obtenerActividades();
   },
   methods: {
+    async obtenerActividades() {
+      try {
+        const res = await fetch("http://localhost/miapi/products.php?action=activities");
+        const data = await res.json();
+        this.productos = data.actividades || [];
+      } catch (error) {
+        console.error("Error al cargar actividades:", error);
+        alert("No se pudieron cargar las actividades");
+      }
+    },
     agregarAlCarrito(producto) {
       let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 

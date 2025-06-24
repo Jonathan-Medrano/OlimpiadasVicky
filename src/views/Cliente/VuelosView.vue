@@ -6,7 +6,7 @@
       <p>No hay vuelos cargados por el momento.</p>
     </div>
 
-    <div class="grid">
+    <div v-else class="grid">
       <ProductCard
         v-for="vuelo in productos"
         :key="vuelo.id"
@@ -28,17 +28,20 @@ export default {
       productos: [],
     };
   },
-  async mounted() {
-    try {
-      const res = await fetch("http://localhost/miapi/get_productos.php?tipo=Vuelo");
-      const data = await res.json();
-      this.productos = data.productos || [];
-    } catch (error) {
-      console.error("Error al cargar los vuelos:", error);
-      alert("Error al cargar los vuelos");
-    }
+  mounted() {
+    this.obtenerVuelos();
   },
   methods: {
+    async obtenerVuelos() {
+      try {
+        const res = await fetch("http://localhost/miapi/products.php?action=flights");
+        const data = await res.json();
+        this.productos = data.vuelos || [];
+      } catch (error) {
+        console.error("Error al cargar los vuelos:", error);
+        alert("Error al cargar los vuelos");
+      }
+    },
     agregarAlCarrito(producto) {
       let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 

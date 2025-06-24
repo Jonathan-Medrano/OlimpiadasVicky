@@ -6,9 +6,9 @@
       <p>No hay paquetes disponibles por el momento.</p>
     </div>
 
-    <div class="grid">
+    <div v-else class="grid">
       <div class="card" v-for="p in paquetes" :key="p.id">
-        <img :src="p.imagen || defaultImg" alt="imagen" />
+        <img :src="p.imagen" alt="imagen" />
         <h3>{{ p.nombre }}</h3>
         <p class="destino">Destino: {{ p.destino }}</p>
         <p class="descripcion">{{ p.descripcion }}</p>
@@ -25,7 +25,6 @@ export default {
   data() {
     return {
       paquetes: [],
-      defaultImg: "https://via.placeholder.com/300x180?text=Paquete",
     };
   },
   mounted() {
@@ -34,7 +33,7 @@ export default {
   methods: {
     async obtenerPaquetes() {
       try {
-        const res = await fetch("http://localhost/miapi/get_paquetes.php");
+        const res = await fetch("http://localhost/miapi/products.php?action=packages");
         const data = await res.json();
         this.paquetes = data.paquetes || [];
       } catch (err) {
