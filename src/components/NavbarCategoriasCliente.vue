@@ -54,6 +54,7 @@ export default {
   padding: 0.4rem 0.6rem;
   border-radius: 8px;
   transition: background-color 0.3s ease;
+  font-family: "Nonito", sans-serif;
 }
 
 .categoria:hover {
@@ -71,6 +72,6 @@ export default {
 
 .categoria.activo {
   background-color: #1f2a38;
-  border-bottom: 2px solid #a463f2;
+  border-bottom: 2px solid #485d78;
 }
 </style>

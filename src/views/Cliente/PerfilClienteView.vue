@@ -92,24 +92,76 @@ export default {
 
 <style scoped>
 .perfil-cliente {
+  max-width: 800px;
+  margin: 2rem auto;
   padding: 2rem;
+  font-family: "Montserrat", sans-serif;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  color: #333;
 }
-.info-usuario {
-  background-color: #f1f1f1;
-  padding: 1rem;
-  border-radius: 8px;
+
+.perfil-cliente h2 {
+  font-size: 2rem;
+  color: #2c3e50;
   margin-bottom: 1.5rem;
+  text-align: center;
 }
+
+.info-usuario {
+  background-color: #f9f9fb;
+  border-left: 4px solid #2c3e50;
+  padding: 1rem 1.5rem;
+  border-radius: 10px;
+  margin-bottom: 2rem;
+}
+
+.info-usuario p {
+  margin: 0.5rem 0;
+  font-size: 1rem;
+}
+
+h3 {
+  margin-top: 2rem;
+  color: #34495e;
+  font-size: 1.5rem;
+}
+
 .tabla-compras {
   width: 100%;
   border-collapse: collapse;
   margin-top: 1rem;
+  background-color: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
+
+.tabla-compras thead {
+  background-color: #2c3e50;
+  color: #fff;
+}
+
 th,
 td {
-  border: 1px solid #ccc;
-  padding: 0.8rem;
+  padding: 1rem;
   text-align: center;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+button {
+  background-color: #2c3e50;
+  color: white;
+  border: none;
+  padding: 0.5rem 0.8rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+button:hover {
+  background-color: #34495e;
 }
 
 .modal {
@@ -122,12 +174,31 @@ td {
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 1000;
 }
+
 .modal-content {
   background-color: white;
   padding: 2rem;
-  border-radius: 10px;
+  border-radius: 16px;
   width: 90%;
-  max-width: 400px;
+  max-width: 500px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.modal-content h3 {
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+  color: #2c3e50;
+}
+
+.modal-content ul {
+  padding-left: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.modal-content li {
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
 }
 </style>

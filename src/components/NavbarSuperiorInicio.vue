@@ -74,8 +74,25 @@ export default {
 }
 
 .titulo {
+  font-family: "Montserrat", sans-serif;
   font-weight: 700;
   font-size: 1.4rem;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+  margin-left: 0.5rem;
+
+  opacity: 0;
+  transform: translateY(10px);
+  animation: aparecerTitulo 1s ease-out forwards;
+}
+
+/* Animación */
+@keyframes aparecerTitulo {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .acciones {

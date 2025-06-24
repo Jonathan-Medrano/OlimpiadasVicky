@@ -1,6 +1,6 @@
 <template>
   <div class="vehiculos">
-    <h1>VEHÍCULOS TURÍSTICOS</h1>
+    <h1>VEHÍCULOS PARA SU MOVIMIENTO 🚗</h1>
     <br />
 
     <div v-if="vehiculos.length === 0">

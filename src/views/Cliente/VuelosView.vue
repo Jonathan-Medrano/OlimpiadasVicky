@@ -1,6 +1,6 @@
 <template>
   <div class="vuelos">
-    <h1>VUELOS TURÍSTICOS</h1>
+    <h1>VUELOS TURÍSTICOS ✈️</h1>
     <br />
 
     <div v-if="vuelos.length === 0">
