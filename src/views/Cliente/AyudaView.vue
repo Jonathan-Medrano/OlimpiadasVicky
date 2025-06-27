@@ -55,7 +55,7 @@ export default {
   methods: {
     async enviarConsulta() {
       try {
-        const res = await fetch("http://localhost/miapi/enviar_consulta.php", {
+        const res = await fetch("http://localhost/miapi/ayuda.php", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
