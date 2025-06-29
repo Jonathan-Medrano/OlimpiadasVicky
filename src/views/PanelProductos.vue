@@ -1,6 +1,6 @@
 <template>
   <div class="admin-productos">
-    <h2>Productos registrados 👥</h2>
+    <h2>Productos registrados 📦</h2>
     <RouterLink to="/admin/insertar">
       <button class="Insertar">Insertar Producto</button>
     </RouterLink>
@@ -19,6 +19,8 @@
           <th>Descripción</th>
           <th>Tipo</th>
           <th>Condiciones</th>
+          <th>Acciones</th>
+          <!-- Nueva columna -->
         </tr>
       </thead>
       <tbody>
@@ -31,6 +33,10 @@
           <td>{{ p.descripcion }}</td>
           <td>{{ p.tipo }}</td>
           <td>{{ p.condiciones }}</td>
+          <td>
+            <button class="btn-modificar" @click="modificarProducto(p)">Modificar</button>
+            <button class="btn-eliminar" @click="eliminarProducto(p)">Eliminar</button>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -55,6 +61,18 @@ export default {
       alert("No se pudieron cargar los productos");
     }
   },
+  methods: {
+    modificarProducto(producto) {
+      console.log("Modificar producto:", producto);
+      this.$router.push(`/admin/modificar/${producto.ID_Producto}`);
+    },
+    eliminarProducto(producto) {
+      console.log("Eliminar producto:", producto);
+      if (confirm(`¿Seguro que quieres eliminar el producto "${producto.Nombre}"?`)) {
+        // Aquí iría llamada para eliminar producto y actualizar lista
+      }
+    },
+  },
 };
 </script>
 
@@ -65,7 +83,7 @@ export default {
   background-color: #f9f9fb;
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  max-width: 1000px;
+  max-width: 1100px;
   margin: 2rem auto;
   color: #4a4a4a;
   border: 1px solid #d1d9e6; /* borde suave para contenedor */
@@ -152,5 +170,40 @@ tbody tr:hover {
   background-color: #e9f0ff;
   box-shadow: 0 2px 10px rgba(52, 93, 184, 0.15);
   cursor: pointer;
+}
+
+/* Estilos para los botones de acción */
+
+.btn-modificar {
+  background-color: #4caf50; /* verde */
+  color: white;
+  border: none;
+  padding: 0.3rem 0.7rem;
+  margin-right: 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: background-color 0.3s ease;
+  font-family: "Montserrat", sans-serif;
+}
+
+.btn-modificar:hover {
+  background-color: #388e3c;
+}
+
+.btn-eliminar {
+  background-color: #e53935; /* rojo */
+  color: white;
+  border: none;
+  padding: 0.3rem 0.7rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: background-color 0.3s ease;
+  font-family: "Montserrat", sans-serif;
+}
+
+.btn-eliminar:hover {
+  background-color: #ab000d;
 }
 </style>

@@ -29,9 +29,23 @@ export default {
   transition: background-color 0.2s ease;
   display: flex;
   justify-content: space-between;
+  font-family: "Nonito", sans-serif;
 }
 
 .btn:hover {
-  background-color: #4b2c91;
+  background-color: #3d4f67;
+  border-radius: 5px;
+}
+
+.btn i {
+  font-size: 1.5rem;
+  margin-bottom: 0.2rem;
+}
+.btn span {
+  font-size: 0.8rem;
+}
+.btn.activo {
+  background-color: #1f2a38;
+  border-bottom: 2px solid #a463f2;
 }
 </style>

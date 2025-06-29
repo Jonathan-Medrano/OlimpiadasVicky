@@ -112,6 +112,10 @@ export default {
   cursor: pointer;
   text-decoration: none;
 }
+
+.btn:hover {
+  background-color: #c05656;
+}
 .btn-perfil {
   display: flex;
   align-items: center;
@@ -125,6 +129,9 @@ export default {
   cursor: pointer;
   font-size: 18px;
 }
+.btn-perfil:hover {
+  background-color: #875dcc;
+}
 .carrito {
   display: flex;
   align-items: center;
@@ -135,5 +142,8 @@ export default {
   color: white;
   font-size: 18px;
   cursor: pointer;
+}
+.carrito:hover {
+  color: rgb(166, 164, 164);
 }
 </style>

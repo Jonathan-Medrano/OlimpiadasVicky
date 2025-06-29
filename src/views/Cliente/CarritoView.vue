@@ -22,7 +22,7 @@
         <tr v-for="(item, i) in carrito" :key="i">
           <td><img :src="item.imagen || defaultImg" alt="imagen" width="200px" /></td>
           <td>{{ item.Nombre }}</td>
-          <td>${{ item.Precio }}</td>
+          <td>${{ item.Precio.toFixed(2) }}</td>
           <td>
             <input
               type="number"
@@ -31,7 +31,7 @@
               min="1"
             />
           </td>
-          <td>${{ item.Precio_Unitario * item.Cantidad }}</td>
+          <td>${{ (item.Precio * item.Cantidad).toFixed(2) }}</td>
           <td><button @click="eliminar(i)">Eliminar</button></td>
         </tr>
       </tbody>
@@ -50,17 +50,38 @@ export default {
   data() {
     return {
       carrito: [],
+      defaultImg: "https://via.placeholder.com/200x150?text=Sin+Imagen",
     };
   },
   computed: {
     total() {
-      return this.carrito.reduce((acc, item) => acc + item.Precio_Unitario * item.Cantidad, 0);
+      return this.carrito.reduce((acc, item) => acc + item.Precio * item.Cantidad, 0);
     },
   },
   methods: {
     cargarCarrito() {
       const datos = localStorage.getItem("carrito");
-      this.carrito = datos ? JSON.parse(datos) : [];
+      const productos = datos ? JSON.parse(datos) : [];
+
+      const agrupado = [];
+
+      productos.forEach((item) => {
+        const nombre = item.Nombre;
+        const index = agrupado.findIndex((p) => p.Nombre === nombre);
+
+        if (index !== -1) {
+          agrupado[index].Cantidad += Number(item.Cantidad) || 1;
+        } else {
+          agrupado.push({
+            Nombre: item.Nombre,
+            Precio: Number(item.Precio) || 0,
+            Cantidad: Number(item.Cantidad) || 1,
+            imagen: item.imagen || "",
+          });
+        }
+      });
+
+      this.carrito = agrupado;
     },
     actualizarCarrito() {
       localStorage.setItem("carrito", JSON.stringify(this.carrito));

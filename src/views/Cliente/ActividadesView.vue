@@ -1,6 +1,6 @@
 <template>
   <div class="actividades">
-    <h1>ACTIVIDADES PARA REALIZAR</h1>
+    <h1>ACTIVIDADES PARA REALIZAR 🤿</h1>
     <br />
 
     <div v-if="actividades.length === 0">

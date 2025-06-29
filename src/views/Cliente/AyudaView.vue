@@ -55,7 +55,7 @@ export default {
   methods: {
     async enviarConsulta() {
       try {
-        const res = await fetch("http://localhost/miapi/enviar_consulta.php", {
+        const res = await fetch("http://localhost/miapi/ayuda.php", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -85,9 +85,9 @@ export default {
 <style scoped>
 .ayuda {
   padding: 2rem;
-  max-width: 900px;
   margin: auto;
   color: #2c3e50;
+  background-color: #c9d1e9;
 }
 
 .ayuda h2 {
@@ -101,6 +101,7 @@ export default {
   text-align: center;
   color: #555;
   margin-bottom: 2rem;
+  font-size: medium;
 }
 
 .faq {

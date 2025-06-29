@@ -1,6 +1,6 @@
 <template>
   <div class="alojamientos">
-    <h1>ALOJAMIENTOS TURÍSTICOS</h1>
+    <h1>ALOJAMIENTOS Y HOSPEDAJE 🏠</h1>
     <br />
 
     <div v-if="alojamientos.length === 0">

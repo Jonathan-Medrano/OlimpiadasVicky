@@ -1,6 +1,6 @@
 <template>
   <div class="paquetes">
-    <h1>PAQUETES TURÍSTICOS</h1>
+    <h1>PAQUETES TURÍSTICOS 📦</h1>
     <br />
 
     <div v-if="paquetes.length === 0">

@@ -13,7 +13,7 @@
 
 <script>
 export default {
-  name: "NavbarSuperiorAdmin",
+  name: "NavbarSuperiorCliente",
   methods: {
     async cerrarSesion() {
       try {
@@ -94,5 +94,8 @@ export default {
 
 .btn-cerrar {
   background-color: #f57373;
+}
+.btn-cerrar:hover {
+  background-color: #c05656;
 }
 </style>

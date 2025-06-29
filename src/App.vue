@@ -16,6 +16,7 @@ import NavbarSuperiorInicio from "@/components/NavbarSuperiorInicio.vue";
 import NavbarSuperiorCliente from "@/components/NavbarSuperiorCliente.vue";
 import NavbarSuperiorAdmin from "@/components/NavbarSuperiorAdmin.vue";
 
+import NavbarCategorias from "./components/NavbarCategorias.vue";
 import NavbarCategoriasCliente from "@/components/NavbarCategoriasCliente.vue";
 import NavbarCategoriasAdmin from "@/components/NavbarCategoriasAdmin.vue";
 
@@ -26,6 +27,7 @@ export default {
     NavbarSuperiorAdmin,
     NavbarCategoriasCliente,
     NavbarCategoriasAdmin,
+    NavbarCategorias,
   },
   data() {
     return {
@@ -39,7 +41,7 @@ export default {
       return "NavbarSuperiorCliente";
     },
     navbarCategoriasSeleccionado() {
-      if (!this.usuario) return null;
+      if (!this.usuario) return "NavbarCategorias";
       const ruta = this.$route.path.toLowerCase(); // aseguramos minúsculas
       if (this.usuario.rol === "cliente") return "NavbarCategoriasCliente";
       if (this.usuario.rol === "admin" && ruta.startsWith("/admin")) return "NavbarCategoriasAdmin";
