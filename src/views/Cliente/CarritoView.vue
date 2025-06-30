@@ -66,15 +66,21 @@ export default {
       const agrupado = [];
 
       productos.forEach((item) => {
-        const nombre = item.Nombre;
-        const index = agrupado.findIndex((p) => p.Nombre === nombre);
+        const id = item.ID_Producto || item.id || item.id_producto;
+        const nombre = item.Nombre || item.nombre;
+        const index = agrupado.findIndex((p) => {
+          const pId = p.ID_Producto || p.id || p.id_producto;
+          return pId === id;
+        });
 
         if (index !== -1) {
           agrupado[index].Cantidad += Number(item.Cantidad) || 1;
         } else {
           agrupado.push({
-            Nombre: item.Nombre,
-            Precio: Number(item.Precio) || 0,
+            ...item,
+            ID_Producto: id,
+            Nombre: nombre,
+            Precio: Number(item.Precio),
             Cantidad: Number(item.Cantidad) || 1,
             imagen: item.imagen || "",
           });
@@ -94,8 +100,16 @@ export default {
       const usuario = JSON.parse(localStorage.getItem("usuario"));
       if (!usuario) return alert("Debés iniciar sesión");
 
+      const carritoValido = this.carrito.every(
+        (item) => item.ID_Producto && item.Nombre && item.Precio && item.Cantidad
+      );
+
+      if (!carritoValido) {
+        return alert("El carrito tiene productos con datos incompletos");
+      }
+
       try {
-        const res = await fetch("http://localhost/miapi/realizar_compra.php", {
+        const res = await fetch("http://localhost/miapi/usuarios/shop.php", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
