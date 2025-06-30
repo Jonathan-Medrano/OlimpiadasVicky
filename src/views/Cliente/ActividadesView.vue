@@ -14,7 +14,7 @@
         <p class="condiciones">{{ a.condiciones }}</p>
         <p class="descripcion">{{ a.descripcion }}</p>
         <p class="precio">$ {{ a.Precio }}</p>
-        <button @click="agregarAlCarrito(p)">Agregar al carrito 🛒</button>
+        <button @click="agregarAlCarrito(a)">Agregar al carrito 🛒</button>
       </div>
     </div>
   </div>
@@ -22,10 +22,11 @@
 
 <script>
 export default {
-  name: "actividadesView",
+  name: "ActividadesView",
   data() {
     return {
       actividades: [],
+      defaultImg: "https://via.placeholder.com/300x180?text=Actividad",
     };
   },
   async mounted() {
@@ -34,23 +35,23 @@ export default {
       const data = await res.json();
       this.actividades = data.actividades || [];
     } catch (error) {
-      console.error("Error al cargar los actividades:", error);
-      alert("Error al cargar los actividades");
+      console.error("Error al cargar las actividades:", error);
+      alert("Error al cargar las actividades");
     }
   },
   methods: {
     agregarAlCarrito(producto) {
-      let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+      const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
-      const existente = carrito.find((item) => item.id === producto.id);
+      const existente = carrito.find((item) => item.ID_Producto === producto.ID_Producto);
       if (existente) {
-        existente.cantidad += 1;
+        existente.Cantidad = (existente.Cantidad || 1) + 1;
       } else {
-        carrito.push({ ...producto, cantidad: 1 });
+        carrito.push({ ...producto, Cantidad: 1 });
       }
 
       localStorage.setItem("carrito", JSON.stringify(carrito));
-      alert("Vuelo agregado al carrito");
+      alert("Actividad agregada al carrito");
     },
   },
 };

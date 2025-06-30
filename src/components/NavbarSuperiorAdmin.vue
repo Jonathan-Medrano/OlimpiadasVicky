@@ -95,4 +95,8 @@ export default {
 .btn-cerrar {
   background-color: #f57373;
 }
+
+.btn-cerrar:hover {
+  background-color: #b06161;
+}
 </style>

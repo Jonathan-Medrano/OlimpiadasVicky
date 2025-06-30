@@ -14,7 +14,7 @@
         <p class="condiciones">{{ a.condiciones }}</p>
         <p class="descripcion">{{ a.descripcion }}</p>
         <p class="precio">$ {{ a.Precio }}</p>
-        <button @click="agregarAlCarrito(p)">Agregar al carrito 🛒</button>
+        <button @click="agregarAlCarrito(a)">Agregar al carrito 🛒</button>
       </div>
     </div>
   </div>
@@ -22,10 +22,11 @@
 
 <script>
 export default {
-  name: "alojamientosView",
+  name: "AlojamientosView",
   data() {
     return {
       alojamientos: [],
+      defaultImg: "https://via.placeholder.com/300x180?text=Alojamiento",
     };
   },
   async mounted() {
@@ -40,17 +41,17 @@ export default {
   },
   methods: {
     agregarAlCarrito(producto) {
-      let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+      const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
-      const existente = carrito.find((item) => item.id === producto.id);
+      const existente = carrito.find((item) => item.ID_Producto === producto.ID_Producto);
       if (existente) {
-        existente.cantidad += 1;
+        existente.Cantidad = (existente.Cantidad || 1) + 1;
       } else {
-        carrito.push({ ...producto, cantidad: 1 });
+        carrito.push({ ...producto, Cantidad: 1 });
       }
 
       localStorage.setItem("carrito", JSON.stringify(carrito));
-      alert("Vuelo agregado al carrito");
+      alert("Alojamiento agregado al carrito");
     },
   },
 };

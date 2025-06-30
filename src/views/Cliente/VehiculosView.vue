@@ -14,7 +14,7 @@
         <p class="destino">Destino: {{ v.condiciones }}</p>
         <p class="descripcion">{{ v.descripcion }}</p>
         <p class="precio">$ {{ v.Precio }}</p>
-        <button @click="agregarAlCarrito(p)">Agregar al carrito 🛒</button>
+        <button @click="agregarAlCarrito(v)">Agregar al carrito 🛒</button>
       </div>
     </div>
   </div>
@@ -26,6 +26,7 @@ export default {
   data() {
     return {
       vehiculos: [],
+      defaultImg: "https://via.placeholder.com/300x180?text=Vehículo",
     };
   },
   async mounted() {
@@ -34,23 +35,23 @@ export default {
       const data = await res.json();
       this.vehiculos = data.vehiculos || [];
     } catch (error) {
-      console.error("Error al cargar los vehiculos:", error);
-      alert("Error al cargar los vehiculos");
+      console.error("Error al cargar los vehículos:", error);
+      alert("Error al cargar los vehículos");
     }
   },
   methods: {
     agregarAlCarrito(producto) {
-      let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+      const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
-      const existente = carrito.find((item) => item.id === producto.id);
+      const existente = carrito.find((item) => item.ID_Producto === producto.ID_Producto);
       if (existente) {
-        existente.cantidad += 1;
+        existente.Cantidad = (existente.Cantidad || 1) + 1;
       } else {
-        carrito.push({ ...producto, cantidad: 1 });
+        carrito.push({ ...producto, Cantidad: 1 });
       }
 
       localStorage.setItem("carrito", JSON.stringify(carrito));
-      alert("Vuelo agregado al carrito");
+      alert("Vehículo agregado al carrito");
     },
   },
 };

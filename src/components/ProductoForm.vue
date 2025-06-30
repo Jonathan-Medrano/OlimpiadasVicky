@@ -2,17 +2,17 @@
   <form @submit.prevent="guardarProducto" class="form-producto">
     <div class="form-group">
       <label for="codigo">Código del producto</label>
-      <input v-model="producto.codigo_producto" id="codigo" required />
+      <input v-model="producto.codigo" id="codigo" required />
     </div>
 
     <div class="form-group">
       <label for="nombre">Nombre</label>
-      <input v-model="producto.nombre" id="nombre" required />
+      <input v-model="producto.Nombre" id="nombre" required />
     </div>
 
     <div class="form-group">
       <label for="descripcion">Descripción</label>
-      <textarea v-model="producto.descripcion" id="descripcion" rows="2" />
+      <textarea v-model="producto.descripcion" id="descripcion" rows="2"></textarea>
     </div>
 
     <div class="form-group">
@@ -29,17 +29,28 @@
 
     <div class="form-group">
       <label for="precio">Precio unitario</label>
-      <input type="number" v-model.number="producto.precio_unitario" id="precio" required />
+      <input type="number" v-model.number="producto.Precio" id="precio" required />
     </div>
 
     <div class="form-group">
-      <label for="cantidad">Cantidad disponible</label>
-      <input type="number" v-model.number="producto.cantidad_disponible" id="cantidad" required />
+      <label for="stock">Cantidad disponible</label>
+      <input type="number" v-model.number="producto.Stock" id="stock" required />
     </div>
 
     <div class="form-group">
       <label for="condiciones">Condiciones</label>
-      <textarea v-model="producto.condiciones" id="condiciones" rows="2" />
+      <textarea v-model="producto.condiciones" id="condiciones" rows="2"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="imagen">URL de la Imagen</label>
+      <input
+        v-model="producto.Imagen"
+        id="imagen"
+        type="url"
+        placeholder="https://ejemplo.com/imagen.jpg"
+        required
+      />
     </div>
 
     <div class="btn-container">
@@ -54,13 +65,14 @@ export default {
   data() {
     return {
       producto: {
-        codigo_producto: "",
-        nombre: "",
+        codigo: "",
+        Nombre: "",
         descripcion: "",
         tipo: "",
-        precio_unitario: "",
-        cantidad_disponible: "",
+        Precio: null,
+        Stock: null,
         condiciones: "",
+        Imagen: "",
       },
     };
   },
@@ -68,13 +80,15 @@ export default {
     async guardarProducto() {
       try {
         const formData = new FormData();
-        formData.append("codigo", this.producto.codigo_producto);
-        formData.append("nombre", this.producto.nombre);
+        formData.append("codigo", this.producto.codigo);
+        formData.append("Nombre", this.producto.Nombre);
         formData.append("descripcion", this.producto.descripcion);
         formData.append("tipo", this.producto.tipo);
-        formData.append("precio", this.producto.precio_unitario);
-        formData.append("stock", this.producto.cantidad_disponible);
+        formData.append("Precio", this.producto.Precio);
+        formData.append("Stock", this.producto.Stock);
         formData.append("condiciones", this.producto.condiciones);
+        formData.append("Imagen", this.producto.Imagen);
+
         const res = await fetch("http://localhost/miapi/tables.php?action=insertProducts", {
           method: "POST",
           body: formData,
@@ -85,6 +99,7 @@ export default {
           this.$emit("producto-agregado");
           this.limpiarFormulario();
         } else {
+          alert(data.mensaje || "Error al guardar el producto");
         }
       } catch (err) {
         console.error(err);
@@ -93,13 +108,14 @@ export default {
     },
     limpiarFormulario() {
       this.producto = {
-        codigo_producto: "",
-        nombre: "",
+        codigo: "",
+        Nombre: "",
         descripcion: "",
         tipo: "",
-        precio_unitario: null,
-        cantidad_disponible: null,
+        Precio: null,
+        Stock: null,
         condiciones: "",
+        Imagen: "",
       };
     },
   },

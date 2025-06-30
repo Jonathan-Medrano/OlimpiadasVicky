@@ -9,7 +9,7 @@
 
     <div class="grid">
       <div class="card" v-for="p in paquetes" :key="p.id">
-        <img :src="p.imagen || defaultImg" alt="imagen" />
+        <img :src="p.imagen || defaultImg" alt="Imagen" />
         <h3>{{ p.Nombre }}</h3>
         <p class="tipo">{{ p.tipo }}</p>
         <p class="descripcion">{{ p.descripcion }}</p>
@@ -53,7 +53,13 @@ export default {
       }
 
       const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-      carrito.push(paquete);
+
+      // Aseguramos que tenga la propiedad Cantidad
+      carrito.push({
+        ...paquete,
+        Cantidad: 1,
+      });
+
       localStorage.setItem("carrito", JSON.stringify(carrito));
       alert("Paquete agregado al carrito.");
     },

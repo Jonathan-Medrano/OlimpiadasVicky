@@ -14,7 +14,7 @@
         <p class="destino">Destino: {{ v.condiciones }}</p>
         <p class="descripcion">{{ v.descripcion }}</p>
         <p class="precio">$ {{ v.Precio }}</p>
-        <button @click="agregarAlCarrito(p)">Agregar al carrito 🛒</button>
+        <button @click="agregarAlCarrito(v)">Agregar al carrito 🛒</button>
       </div>
     </div>
   </div>
@@ -26,6 +26,7 @@ export default {
   data() {
     return {
       vuelos: [],
+      defaultImg: "https://via.placeholder.com/200x150?text=Sin+Imagen",
     };
   },
   async mounted() {
@@ -42,15 +43,23 @@ export default {
     agregarAlCarrito(producto) {
       let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
-      const existente = carrito.find((item) => item.id === producto.id);
+      const id = producto.ID_Producto;
+      const existente = carrito.find((item) => item.ID_Producto === id);
+
       if (existente) {
-        existente.cantidad += 1;
+        existente.Cantidad += 1;
       } else {
-        carrito.push({ ...producto, cantidad: 1 });
+        carrito.push({
+          ID_Producto: id,
+          Nombre: producto.Nombre,
+          Precio: Number(producto.Precio),
+          imagen: producto.imagen || "",
+          Cantidad: 1,
+        });
       }
 
       localStorage.setItem("carrito", JSON.stringify(carrito));
-      alert("Vuelo agregado al carrito");
+      alert("Producto agregado al carrito");
     },
   },
 };
