@@ -7,39 +7,45 @@
       <router-link to="/">Ir a explorar viajes</router-link>
     </div>
 
-    <table v-else class="tabla-carrito">
-      <thead>
-        <tr>
-          <th>Imagen</th>
-          <th>Producto</th>
-          <th>Precio</th>
-          <th>Cantidad</th>
-          <th>Subtotal</th>
-          <th>Acción</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(item, i) in carrito" :key="i">
-          <td><img :src="item.imagen || defaultImg" alt="imagen" width="200px" /></td>
-          <td>{{ item.Nombre }}</td>
-          <td>${{ item.Precio.toFixed(2) }}</td>
-          <td>
-            <input
-              type="number"
-              v-model.number="item.Cantidad"
-              @input="actualizarCarrito"
-              min="1"
-            />
-          </td>
-          <td>${{ (item.Precio * item.Cantidad).toFixed(2) }}</td>
-          <td><button @click="eliminar(i)">Eliminar</button></td>
-        </tr>
-      </tbody>
-    </table>
+    <div v-else>
+      <table class="tabla-carrito">
+        <thead>
+          <tr>
+            <th>Imagen</th>
+            <th>Producto</th>
+            <th>Precio</th>
+            <th>Cantidad</th>
+            <th>Subtotal</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(item, index) in carrito" :key="item.clave">
+            <td>
+              <img :src="item.imagen || defaultImg" alt="Imagen del producto" width="120" />
+            </td>
+            <td>{{ item.Nombre }}</td>
+            <td>${{ item.Precio.toFixed(2) }}</td>
+            <td>
+              <input
+                type="number"
+                v-model.number="item.Cantidad"
+                @input="actualizarCarrito"
+                min="1"
+              />
+            </td>
+            <td>${{ (item.Precio * item.Cantidad).toFixed(2) }}</td>
+            <td>
+              <button @click="eliminar(index)">Eliminar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
-    <div v-if="carrito.length > 0" class="total">
-      <p><strong>Total:</strong> ${{ total.toFixed(2) }}</p>
-      <button @click="realizarCompra">Confirmar compra</button>
+      <div class="total">
+        <p><strong>Total:</strong> ${{ total.toFixed(2) }}</p>
+        <button @click="realizarCompra">Confirmar compra</button>
+      </div>
     </div>
   </div>
 </template>
@@ -62,16 +68,14 @@ export default {
     cargarCarrito() {
       const datos = localStorage.getItem("carrito");
       const productos = datos ? JSON.parse(datos) : [];
-
       const agrupado = [];
 
       productos.forEach((item) => {
-        const id = item.ID_Producto || item.id || item.id_producto;
-        const nombre = item.Nombre || item.nombre;
-        const index = agrupado.findIndex((p) => {
-          const pId = p.ID_Producto || p.id || p.id_producto;
-          return pId === id;
-        });
+        const id = item.ID_Producto || item.id || item.id_producto || item.ID || "";
+        const nombre = item.Nombre || item.nombre || "Sin nombre";
+        const clave = `${id}_${nombre}`;
+
+        const index = agrupado.findIndex((p) => p.clave === clave);
 
         if (index !== -1) {
           agrupado[index].Cantidad += Number(item.Cantidad) || 1;
@@ -83,29 +87,36 @@ export default {
             Precio: Number(item.Precio),
             Cantidad: Number(item.Cantidad) || 1,
             imagen: item.imagen || "",
+            clave, // clave única para evitar conflictos
           });
         }
       });
 
       this.carrito = agrupado;
     },
+
     actualizarCarrito() {
       localStorage.setItem("carrito", JSON.stringify(this.carrito));
     },
+
     eliminar(index) {
       this.carrito.splice(index, 1);
       this.actualizarCarrito();
     },
+
     async realizarCompra() {
       const usuario = JSON.parse(localStorage.getItem("usuario"));
-      if (!usuario) return alert("Debés iniciar sesión");
+
+      if (!usuario) {
+        return alert("Debés iniciar sesión para confirmar la compra.");
+      }
 
       const carritoValido = this.carrito.every(
-        (item) => item.ID_Producto && item.Nombre && item.Precio && item.Cantidad
+        (item) => item.ID_Producto && item.Nombre && item.Precio > 0 && item.Cantidad > 0
       );
 
       if (!carritoValido) {
-        return alert("El carrito tiene productos con datos incompletos");
+        return alert("Hay productos con datos incompletos o inválidos.");
       }
 
       try {
@@ -119,16 +130,17 @@ export default {
         });
 
         const data = await res.json();
+
         if (data.success) {
-          alert("Compra realizada con éxito");
+          alert("Compra realizada con éxito 🛍️");
           localStorage.removeItem("carrito");
           this.carrito = [];
         } else {
-          alert(data.message || "No se pudo completar la compra");
+          alert(data.message || "No se pudo completar la compra.");
         }
-      } catch (err) {
-        console.error(err);
-        alert("Error al conectarse con el servidor");
+      } catch (error) {
+        console.error("Error:", error);
+        alert("Error al conectarse con el servidor.");
       }
     },
   },

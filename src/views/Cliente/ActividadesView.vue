@@ -1,20 +1,20 @@
 <template>
   <div class="actividades">
-    <h1>ACTIVIDADES PARA REALIZAR 🤿</h1>
+    <h1>ACTIVIDADES 🎯</h1>
     <br />
 
     <div v-if="actividades.length === 0">
       <p>No hay actividades disponibles por el momento.</p>
     </div>
 
-    <div class="grid">
-      <div class="card" v-for="a in actividades" :key="a.ID_Producto">
+    <div v-else class="grid">
+      <div class="card" v-for="a in actividades" :key="a.id">
         <img :src="a.imagen || defaultImg" alt="imagen" />
         <h3>{{ a.Nombre }}</h3>
-        <p class="condiciones">{{ a.condiciones }}</p>
+        <p class="tipo">{{ a.tipo }}</p>
         <p class="descripcion">{{ a.descripcion }}</p>
         <p class="precio">$ {{ a.Precio }}</p>
-        <button @click="agregarAlCarrito(p)">Agregar al carrito 🛒</button>
+        <button @click="agregarAlCarrito(a)">Agregar al carrito 🛒</button>
       </div>
     </div>
   </div>
@@ -22,35 +22,39 @@
 
 <script>
 export default {
-  name: "actividadesView",
+  name: "ActividadesView",
   data() {
     return {
       actividades: [],
+      defaultImg: "https://via.placeholder.com/300x200?text=Sin+Imagen",
     };
   },
-  async mounted() {
-    try {
-      const res = await fetch("http://localhost/miapi/products.php?action=activities");
-      const data = await res.json();
-      this.actividades = data.actividades || [];
-    } catch (error) {
-      console.error("Error al cargar los actividades:", error);
-      alert("Error al cargar los actividades");
-    }
+  mounted() {
+    this.obtenerActividades();
   },
   methods: {
+    async obtenerActividades() {
+      try {
+        const res = await fetch("http://localhost/miapi/products.php?action=activities");
+        const data = await res.json();
+        this.actividades = data.actividades || [];
+      } catch (err) {
+        console.error("Error al obtener actividades:", err);
+        alert("No se pudieron cargar las actividades.");
+      }
+    },
     agregarAlCarrito(producto) {
-      let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-
-      const existente = carrito.find((item) => item.id === producto.id);
-      if (existente) {
-        existente.cantidad += 1;
-      } else {
-        carrito.push({ ...producto, cantidad: 1 });
+      const usuario = JSON.parse(localStorage.getItem("usuario"));
+      if (!usuario) {
+        alert("Debés iniciar sesión para agregar al carrito.");
+        this.$router.push("/login");
+        return;
       }
 
+      const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+      carrito.push(producto);
       localStorage.setItem("carrito", JSON.stringify(carrito));
-      alert("Vuelo agregado al carrito");
+      alert("Actividad agregada al carrito.");
     },
   },
 };

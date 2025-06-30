@@ -7,14 +7,14 @@
       <p>No hay vuelos disponibles por el momento.</p>
     </div>
 
-    <div class="grid">
-      <div class="card" v-for="v in vuelos" :key="v.ID_Producto">
+    <div v-else class="grid">
+      <div class="card" v-for="v in vuelos" :key="v.id">
         <img :src="v.imagen || defaultImg" alt="imagen" />
         <h3>{{ v.Nombre }}</h3>
-        <p class="destino">Destino: {{ v.condiciones }}</p>
+        <p class="tipo">{{ v.tipo }}</p>
         <p class="descripcion">{{ v.descripcion }}</p>
         <p class="precio">$ {{ v.Precio }}</p>
-        <button @click="agregarAlCarrito(p)">Agregar al carrito 🛒</button>
+        <button @click="agregarAlCarrito(v)">Agregar al carrito 🛒</button>
       </div>
     </div>
   </div>
@@ -26,31 +26,35 @@ export default {
   data() {
     return {
       vuelos: [],
+      defaultImg: "https://via.placeholder.com/300x200?text=Sin+Imagen",
     };
   },
-  async mounted() {
-    try {
-      const res = await fetch("http://localhost/miapi/products.php?action=flights");
-      const data = await res.json();
-      this.vuelos = data.vuelos || [];
-    } catch (error) {
-      console.error("Error al cargar los vuelos:", error);
-      alert("Error al cargar los vuelos");
-    }
+  mounted() {
+    this.obtenerVuelos();
   },
   methods: {
+    async obtenerVuelos() {
+      try {
+        const res = await fetch("http://localhost/miapi/products.php?action=flights");
+        const data = await res.json();
+        this.vuelos = data.vuelos || [];
+      } catch (err) {
+        console.error("Error al obtener vuelos:", err);
+        alert("No se pudieron cargar los vuelos.");
+      }
+    },
     agregarAlCarrito(producto) {
-      let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-
-      const existente = carrito.find((item) => item.id === producto.id);
-      if (existente) {
-        existente.cantidad += 1;
-      } else {
-        carrito.push({ ...producto, cantidad: 1 });
+      const usuario = JSON.parse(localStorage.getItem("usuario"));
+      if (!usuario) {
+        alert("Debés iniciar sesión para agregar al carrito.");
+        this.$router.push("/login");
+        return;
       }
 
+      const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+      carrito.push(producto);
       localStorage.setItem("carrito", JSON.stringify(carrito));
-      alert("Vuelo agregado al carrito");
+      alert("Vuelo agregado al carrito.");
     },
   },
 };
@@ -59,13 +63,14 @@ export default {
 <style scoped>
 .vuelos {
   padding: 2rem;
-  font-family: Georgia, "Times New Roman", Times, serif;
+  font-family: "Segoe UI", sans-serif;
   background-color: #c9d1e9;
 }
 
 h1 {
   text-align: center;
   margin-bottom: 1.5rem;
+  font-family: Georgia, "Times New Roman", Times, serif;
   color: #1f3b58;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
@@ -95,11 +100,6 @@ h1 {
 .card h3 {
   font-size: 1.1rem;
   margin: 0.3rem 0;
-}
-
-.card .destino {
-  font-weight: bold;
-  color: #555;
 }
 
 .card .descripcion {

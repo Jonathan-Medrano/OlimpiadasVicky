@@ -1,20 +1,20 @@
 <template>
   <div class="vehiculos">
-    <h1>VEHÍCULOS PARA SU MOVIMIENTO 🚗</h1>
+    <h1>VEHÍCULOS PARA ALQUILAR 🚗</h1>
     <br />
 
     <div v-if="vehiculos.length === 0">
-      <p>No hay Vehiculos disponibles por el momento.</p>
+      <p>No hay vehículos disponibles por el momento.</p>
     </div>
 
-    <div class="grid">
-      <div class="card" v-for="v in vehiculos" :key="v.ID_Producto">
+    <div v-else class="grid">
+      <div class="card" v-for="v in vehiculos" :key="v.id">
         <img :src="v.imagen || defaultImg" alt="imagen" />
         <h3>{{ v.Nombre }}</h3>
-        <p class="destino">Destino: {{ v.condiciones }}</p>
+        <p class="tipo">{{ v.tipo }}</p>
         <p class="descripcion">{{ v.descripcion }}</p>
         <p class="precio">$ {{ v.Precio }}</p>
-        <button @click="agregarAlCarrito(p)">Agregar al carrito 🛒</button>
+        <button @click="agregarAlCarrito(v)">Agregar al carrito 🛒</button>
       </div>
     </div>
   </div>
@@ -25,45 +25,36 @@ export default {
   name: "VehiculosView",
   data() {
     return {
-      productos: [],
+      vehiculos: [],
+      defaultImg: "https://via.placeholder.com/300x200?text=Sin+Imagen",
     };
   },
-  async mounted() {
-    try {
-      const res = await fetch("http://localhost/miapi/products.php?action=vehicles");
-      const data = await res.json();
-      this.vehiculos = data.vehiculos || [];
-    } catch (error) {
-      console.error("Error al cargar los vehiculos:", error);
-      alert("Error al cargar los vehiculos");
-    }
+  mounted() {
+    this.obtenerVehiculos();
   },
   methods: {
-    agregarAlCarrito(producto) {
-      let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-
-      const existente = carrito.find((item) => item.id === producto.id);
-      if (existente) {
-        existente.cantidad += 1;
-      } else {
-        carrito.push({ ...producto, cantidad: 1 });
+    async obtenerVehiculos() {
+      try {
+        const res = await fetch("http://localhost/miapi/products.php?action=vehicles");
+        const data = await res.json();
+        this.vehiculos = data.vehiculos || [];
+      } catch (err) {
+        console.error("Error al obtener vehículos:", err);
+        alert("No se pudieron cargar los vehículos.");
       }
-
-      localStorage.setItem("carrito", JSON.stringify(carrito));
-      alert("Vuelo agregado al carrito");
     },
     agregarAlCarrito(producto) {
-      let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-
-      const existente = carrito.find((item) => item.id === producto.id);
-      if (existente) {
-        existente.cantidad += 1;
-      } else {
-        carrito.push({ ...producto, cantidad: 1 });
+      const usuario = JSON.parse(localStorage.getItem("usuario"));
+      if (!usuario) {
+        alert("Debés iniciar sesión para agregar al carrito.");
+        this.$router.push("/login");
+        return;
       }
 
+      const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+      carrito.push(producto);
       localStorage.setItem("carrito", JSON.stringify(carrito));
-      alert("Alojamiento agregado al carrito");
+      alert("Vehículo agregado al carrito.");
     },
   },
 };
